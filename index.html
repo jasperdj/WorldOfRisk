@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risk Territory Creator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+  
+		<div id="initialSettings">
+			<div class="settings-header">
+				<img src="./logo.png" alt="World of Risk" class="game-logo">
+				<h1>World of Risk</h1>
+			</div>
+
+			<!-- Floating start game button -->
+			<div class="floating-start-button">
+				<button id="startGameBtn" class="start-game-btn">Start Game</button>
+			</div>
+
+			<div class="settings-container">
+				<!-- Presets management -->
+				<div class="settings-panel presets-panel">
+					<h2>Presets</h2>
+					<div class="preset-controls">
+						<select id="presetSelector" class="setting-input">
+							<option value="default">Default Settings</option>
+							<!-- Presets will be loaded here -->
+						</select>
+						<div class="preset-buttons">
+							<button id="loadPresetBtn" class="preset-btn">Load</button>
+							<button id="savePresetBtn" class="preset-btn">Save</button>
+							<button id="saveAsPresetBtn" class="preset-btn">Save As</button>
+							<button id="deletePresetBtn" class="preset-btn">Delete</button>
+						</div>
+					</div>
+				</div>
+
+				<!-- Basic settings -->
+				<div class="settings-panel">
+					<h2>Basic Settings</h2>
+					<div class="settings-group">
+						<div class="setting-item">
+							<label for="gridSize">Map Size:</label>
+							<input type="number" id="gridSize" min="10" max="40" step="1" value="21" class="setting-input">
+						</div>
+						<div class="setting-item">
+							<label for="playerCount">Players:</label>
+							<input type="number" id="playerCount" min="2" max="8" step="1" value="4" class="setting-input">
+						</div>
+						<div class="setting-item">
+							<label for="continentTileMultiplier">Continent Tile Multiplier:</label>
+							<input type="number" id="continentTileMultiplier" min="0.5" max="5" step="0.5" value="1" class="setting-input">
+						</div>
+						<div class="setting-item">
+							<label for="seaTiles">Sea Tiles:</label>
+							<input type="number" id="seaTiles" min="5" max="50" step="1" value="20" class="setting-input">
+						</div>
+						<div class="setting-item">
+							<label for="worldTilesPerTurn">World Tiles Per Turn:</label>
+							<input type="number" id="worldTilesPerTurn" min="1" max="5" step="1" value="1" class="setting-input">
+						</div>
+						<div class="setting-item">
+							<label for="shippingRoutesPerPlayer">Shipping Routes Per Player:</label>
+							<input type="number" id="shippingRoutesPerPlayer" min="1" max="10" step="1" value="5" class="setting-input">
+						</div>
+						<div class="setting-item">
+							<label for="bombsPerPlayer">Bombs Per Player:</label>
+							<input type="number" id="bombsPerPlayer" min="0" max="5" step="1" value="1" class="setting-input">
+						</div>
+					</div>
+				</div>
+
+				<!-- Continent settings -->
+				<div class="settings-panel">
+					<h2>Continent Settings</h2>
+					<div class="settings-group">
+						<div class="setting-item">
+							<label for="maxNorthAmerica">North America Size:</label>
+							<input type="number" id="maxNorthAmerica" min="4" max="20" step="1" value="12" class="setting-input">
+						</div>
+						<div class="setting-item">
+							<label for="maxSouthAmerica">South America Size:</label>
+							<input type="number" id="maxSouthAmerica" min="4" max="15" step="1" value="9" class="setting-input">
+						</div>
+						<div class="setting-item">
+							<label for="maxEurope">Europe Size:</label>
+							<input type="number" id="maxEurope" min="4" max="18" step="1" value="10" class="setting-input">
+						</div>
+						<div class="setting-item">
+							<label for="maxAfrica">Africa Size:</label>
+							<input type="number" id="maxAfrica" min="4" max="20" step="1" value="12" class="setting-input">
+						</div>
+						<div class="setting-item">
+							<label for="maxAsia">Asia Size:</label>
+							<input type="number" id="maxAsia" min="4" max="20" step="1" value="12" class="setting-input">
+						</div>
+						<div class="setting-item">
+							<label for="maxAustralia">Australia Size:</label>
+							<input type="number" id="maxAustralia" min="4" max="15" step="1" value="7" class="setting-input">
+						</div>
+					</div>
+				</div>
+
+				<!-- Unit settings -->
+				<div class="settings-panel">
+					<h2>Unit Settings</h2>
+					<div class="settings-group">
+						<div class="setting-item">
+							<label for="unitsPerPlayer">Initial Units Per Player:</label>
+							<input type="number" id="unitsPerPlayer" min="3" max="30" step="1" value="10" class="setting-input">
+						</div>
+						<div class="setting-item">
+							<label for="unitsPerTurn">Units Per Turn:</label>
+							<input type="number" id="unitsPerTurn" min="1" max="10" step="1" value="3" class="setting-input">
+						</div>
+						<div class="setting-item">
+							<label for="unitPlacementMode">Unit Placement:</label>
+							<select id="unitPlacementMode" class="setting-input">
+								<option value="after">After Creator Phase</option>
+								<option value="during">During Creator Phase</option>
+							</select>
+						</div>
+						<div class="setting-item">
+							<label for="minUnitReinforcement">Min Unit Reinforcement:</label>
+							<input type="number" id="minUnitReinforcement" min="1" max="10" step="1" value="3" class="setting-input">
+						</div>
+						<div class="setting-item">
+							<label for="minContinentBonus">Min Continent Bonus:</label>
+							<input type="number" id="minContinentBonus" min="0" max="10" step="1" value="2" class="setting-input">
+						</div>
+						<div class="setting-item">
+							<label for="continentBonusDivisor">Continent Bonus Divisor:</label>
+							<input type="number" id="continentBonusDivisor" min="1" max="5" step="1" value="2" class="setting-input">
+						</div>
+						<div class="setting-item">
+							<label for="continentBonusModifier">Continent Bonus Modifier:</label>
+							<input type="number" id="continentBonusModifier" min="0" max="5" step="1" value="1" class="setting-input">
+						</div>
+					</div>
+				</div>
+
+				<!-- Combat settings -->
+				<div class="settings-panel">
+					<h2>Combat Settings</h2>
+					<div class="settings-group">
+						<div class="setting-item">
+							<label for="attackerDice">Attacker Dice:</label>
+							<input type="number" id="attackerDice" min="4" max="20" step="1" value="6" class="setting-input">
+						</div>
+						<div class="setting-item">
+							<label for="attackerOneDiceMin">Attacker 1 Dice Min Units:</label>
+							<input type="number" id="attackerOneDiceMin" min="1" max="5" step="1" value="1" class="setting-input">
+						</div>
+						<div class="setting-item">
+							<label for="attackerTwoDiceMin">Attacker 2 Dice Min Units:</label>
+							<input type="number" id="attackerTwoDiceMin" min="2" max="10" step="1" value="2" class="setting-input">
+						</div>
+						<div class="setting-item">
+							<label for="attackerThreeDiceMin">Attacker 3 Dice Min Units:</label>
+							<input type="number" id="attackerThreeDiceMin" min="3" max="15" step="1" value="3" class="setting-input">
+						</div>
+						<div class="setting-item">
+							<label for="defenderDice">Defender Dice:</label>
+							<input type="number" id="defenderDice" min="4" max="20" step="1" value="6" class="setting-input">
+						</div>
+						<div class="setting-item">
+							<label for="defenderOneDiceMin">Defender 1 Dice Min Units:</label>
+							<input type="number" id="defenderOneDiceMin" min="1" max="5" step="1" value="1" class="setting-input">
+						</div>
+						<div class="setting-item">
+							<label for="defenderTwoDiceMin">Defender 2 Dice Min Units:</label>
+							<input type="number" id="defenderTwoDiceMin" min="2" max="10" step="1" value="2" class="setting-input">
+						</div>
+					</div>
+				</div>
+
+				<!-- Natural events -->
+				<div class="settings-panel">
+					<h2>Natural Events</h2>
+					<div class="settings-group">
+						<div class="setting-subheader">Volcano</div>
+						<div class="setting-item chance-container">
+							<label>Eruption Chance:</label>
+							<div class="chance-inputs">
+								<div class="chance-field">
+									<label for="volcanoOccuranceDice">Dice</label>
+									<input type="number" id="volcanoOccuranceDice" min="1" max="20" step="1" value="6" class="setting-input">
+								</div>
+								<div class="chance-field">
+									<label for="volcanoOccuranceModifier">Mod</label>
+									<input type="number" id="volcanoOccuranceModifier" min="-5" max="5" step="1" value="0" class="setting-input">
+								</div>
+								<div class="chance-field">
+									<label for="volcanoOccuranceThreshold">Threshold</label>
+									<input type="number" id="volcanoOccuranceThreshold" min="1" max="20" step="1" value="5" class="setting-input">
+								</div>
+							</div>
+						</div>
+						<div class="setting-item chance-container">
+							<label>Lava Reach:</label>
+							<div class="chance-inputs">
+								<div class="chance-field">
+									<label for="volcanoLavaReachDice">Dice</label>
+									<input type="number" id="volcanoLavaReachDice" min="1" max="20" step="1" value="6" class="setting-input">
+								</div>
+								<div class="chance-field">
+									<label for="volcanoLavaReachModifier">Mod</label>
+									<input type="number" id="volcanoLavaReachModifier" min="-5" max="5" step="1" value="0" class="setting-input">
+								</div>
+								<div class="chance-field">
+									<label for="volcanoLavaReachThreshold">Threshold</label>
+									<input type="number" id="volcanoLavaReachThreshold" min="1" max="20" step="1" value="3" class="setting-input">
+								</div>
+							</div>
+						</div>
+						<div class="setting-item chance-container">
+							<label>Smoke Movement:</label>
+							<div class="chance-inputs">
+								<div class="chance-field">
+									<label for="volcanoSmokeMovementDice">Dice</label>
+									<input type="number" id="volcanoSmokeMovementDice" min="1" max="20" step="1" value="6" class="setting-input">
+								</div>
+								<div class="chance-field">
+									<label for="volcanoSmokeMovementModifier">Mod</label>
+									<input type="number" id="volcanoSmokeMovementModifier" min="-5" max="5" step="1" value="0" class="setting-input">
+								</div>
+								<div class="chance-field">
+									<label for="volcanoSmokeMovementThreshold">Threshold</label>
+									<input type="number" id="volcanoSmokeMovementThreshold" min="1" max="20" step="1" value="3" class="setting-input">
+								</div>
+							</div>
+						</div>
+						<div class="setting-item chance-container">
+							<label>Smoke Clears Up:</label>
+							<div class="chance-inputs">
+								<div class="chance-field">
+									<label for="volcanoClearsUpDice">Dice</label>
+									<input type="number" id="volcanoClearsUpDice" min="1" max="20" step="1" value="6" class="setting-input">
+								</div>
+								<div class="chance-field">
+									<label for="volcanoClearsUpModifier">Mod</label>
+									<input type="number" id="volcanoClearsUpModifier" min="-5" max="5" step="1" value="0" class="setting-input">
+								</div>
+								<div class="chance-field">
+									<label for="volcanoClearsUpThreshold">Threshold</label>
+									<input type="number" id="volcanoClearsUpThreshold" min="1" max="20" step="1" value="3" class="setting-input">
+								</div>
+							</div>
+						</div>
+						
+						<div class="setting-subheader">Hurricane</div>
+						<div class="setting-item chance-container">
+							<label>Hurricane Chance:</label>
+							<div class="chance-inputs">
+								<div class="chance-field">
+									<label for="hurricaneOccuranceDice">Dice</label>
+									<input type="number" id="hurricaneOccuranceDice" min="1" max="20" step="1" value="6" class="setting-input">
+								</div>
+								<div class="chance-field">
+									<label for="hurricaneOccuranceModifier">Mod</label>
+									<input type="number" id="hurricaneOccuranceModifier" min="-5" max="5" step="1" value="0" class="setting-input">
+								</div>
+								<div class="chance-field">
+									<label for="hurricaneOccuranceThreshold">Threshold</label>
+									<input type="number" id="hurricaneOccuranceThreshold" min="1" max="20" step="1" value="5" class="setting-input">
+								</div>
+							</div>
+						</div>
+						<div class="setting-item chance-container">
+							<label>Clears Up Chance:</label>
+							<div class="chance-inputs">
+								<div class="chance-field">
+									<label for="hurricaneClearsUpDice">Dice</label>
+									<input type="number" id="hurricaneClearsUpDice" min="1" max="20" step="1" value="6" class="setting-input">
+								</div>
+								<div class="chance-field">
+									<label for="hurricaneClearsUpModifier">Mod</label>
+									<input type="number" id="hurricaneClearsUpModifier" min="-5" max="5" step="1" value="0" class="setting-input">
+								</div>
+								<div class="chance-field">
+									<label for="hurricaneClearsUpThreshold">Threshold</label>
+									<input type="number" id="hurricaneClearsUpThreshold" min="1" max="20" step="1" value="3" class="setting-input">
+								</div>
+							</div>
+						</div>
+						
+						<div class="setting-subheader">Fire</div>
+						<div class="setting-item chance-container">
+							<label>Land Conversion Chance:</label>
+							<div class="chance-inputs">
+								<div class="chance-field">
+									<label for="fireLandChanceDice">Dice</label>
+									<input type="number" id="fireLandChanceDice" min="1" max="20" step="1" value="6" class="setting-input">
+								</div>
+								<div class="chance-field">
+									<label for="fireLandChanceModifier">Mod</label>
+									<input type="number" id="fireLandChanceModifier" min="-5" max="5" step="1" value="0" class="setting-input">
+								</div>
+								<div class="chance-field">
+									<label for="fireLandChanceThreshold">Threshold</label>
+									<input type="number" id="fireLandChanceThreshold" min="1" max="20" step="1" value="3" class="setting-input">
+								</div>
+							</div>
+						</div>
+						<div class="setting-item chance-container">
+							<label>Troops Killed Chance:</label>
+							<div class="chance-inputs">
+								<div class="chance-field">
+									<label for="fireTroopKillDice">Dice</label>
+									<input type="number" id="fireTroopKillDice" min="1" max="20" step="1" value="6" class="setting-input">
+								</div>
+								<div class="chance-field">
+									<label for="fireTroopKillModifier">Mod</label>
+									<input type="number" id="fireTroopKillModifier" min="-5" max="5" step="1" value="0" class="setting-input">
+								</div>
+								<div class="chance-field">
+									<label for="fireTroopKillThreshold">Threshold</label>
+									<input type="number" id="fireTroopKillThreshold" min="1" max="20" step="1" value="4" class="setting-input">
+								</div>
+							</div>
+						</div>
+						
+						<div class="setting-subheader">Lightning</div>
+						<div class="setting-item chance-container">
+							<label>Occurrence Chance:</label>
+							<div class="chance-inputs">
+								<div class="chance-field">
+									<label for="lightningOccuranceDice">Dice</label>
+									<input type="number" id="lightningOccuranceDice" min="1" max="20" step="1" value="10" class="setting-input">
+								</div>
+								<div class="chance-field">
+									<label for="lightningOccuranceModifier">Mod</label>
+									<input type="number" id="lightningOccuranceModifier" min="-5" max="5" step="1" value="0" class="setting-input">
+								</div>
+								<div class="chance-field">
+									<label for="lightningOccuranceThreshold">Threshold</label>
+									<input type="number" id="lightningOccuranceThreshold" min="1" max="20" step="1" value="8" class="setting-input">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Technology -->
+				<div class="settings-panel">
+					<h2>Technology</h2>
+					<div class="settings-group">
+						<div class="setting-subheader">Shipping Yard</div>
+						<div class="setting-item">
+							<label for="minShippingDocks">Min Shipping Docks:</label>
+							<input type="number" id="minShippingDocks" min="1" max="10" step="1" value="2" class="setting-input">
+						</div>
+						<div class="setting-item">
+							<label for="minShippingConnections">Min Route Connections:</label>
+							<input type="number" id="minShippingConnections" min="1" max="10" step="1" value="3" class="setting-input">
+						</div>
+						<div class="setting-item">
+							<label for="shippingRoutesPerTurn">Routes Per Turn:</label>
+							<input type="number" id="shippingRoutesPerTurn" min="1" max="5" step="1" value="1" class="setting-input">
+						</div>
+						<div class="setting-item chance-container">
+							<label>Pickup Chance:</label>
+							<div class="chance-inputs">
+								<div class="chance-field">
+									<label for="shippingRoutePickupDice">Dice</label>
+									<input type="number" id="shippingRoutePickupDice" min="1" max="20" step="1" value="6" class="setting-input">
+								</div>
+								<div class="chance-field">
+									<label for="shippingRoutePickupModifier">Mod</label>
+									<input type="number" id="shippingRoutePickupModifier" min="-5" max="5" step="1" value="0" class="setting-input">
+								</div>
+								<div class="chance-field">
+									<label for="shippingRoutePickupThreshold">Threshold</label>
+									<input type="number" id="shippingRoutePickupThreshold" min="1" max="20" step="1" value="3" class="setting-input">
+								</div>
+							</div>
+						</div>
+						
+						<div class="setting-subheader">Portal Technology</div>
+						<div class="setting-item">
+							<label for="portalMinContinents">Min Continents:</label>
+							<input type="number" id="portalMinContinents" min="1" max="6" step="1" value="2" class="setting-input">
+						</div>
+						<div class="setting-item">
+							<label for="portalMinTroops">Min Troop Size:</label>
+							<input type="number" id="portalMinTroops" min="1" max="10" step="1" value="3" class="setting-input">
+						</div>
+						<div class="setting-item">
+							<label for="portalMaxCount">Max Portals:</label>
+							<input type="number" id="portalMaxCount" min="1" max="5" step="1" value="1" class="setting-input">
+						</div>
+						<div class="setting-item chance-container">
+							<label>Portal Chance:</label>
+							<div class="chance-inputs">
+								<div class="chance-field">
+									<label for="portalChanceDice">Dice</label>
+									<input type="number" id="portalChanceDice" min="1" max="20" step="1" value="6" class="setting-input">
+								</div>
+								<div class="chance-field">
+									<label for="portalChanceModifier">Mod</label>
+									<input type="number" id="portalChanceModifier" min="-5" max="5" step="1" value="0" class="setting-input">
+								</div>
+								<div class="chance-field">
+									<label for="portalChanceThreshold">Threshold</label>
+									<input type="number" id="portalChanceThreshold" min="1" max="20" step="1" value="4" class="setting-input">
+								</div>
+							</div>
+						</div>
+						<div class="setting-item">
+							<label for="portalRange">Placement Range:</label>
+							<input type="number" id="portalRange" min="1" max="20" step="1" value="10" class="setting-input">
+						</div>
+						
+						<div class="setting-subheader">Terraformer</div>
+						<div class="setting-item chance-container">
+							<label>Tile Pickup Chance:</label>
+							<div class="chance-inputs">
+								<div class="chance-field">
+									<label for="terraformerPickupDice">Dice</label>
+									<input type="number" id="terraformerPickupDice" min="1" max="20" step="1" value="6" class="setting-input">
+								</div>
+								<div class="chance-field">
+									<label for="terraformerPickupModifier">Mod</label>
+									<input type="number" id="terraformerPickupModifier" min="-5" max="5" step="1" value="0" class="setting-input">
+								</div>
+								<div class="chance-field">
+									<label for="terraformerPickupThreshold">Threshold</label>
+									<input type="number" id="terraformerPickupThreshold" min="1" max="20" step="1" value="4" class="setting-input">
+								</div>
+							</div>
+						</div>
+						<div class="setting-item">
+							<label for="terraformerRange">Placement Range:</label>
+							<input type="number" id="terraformerRange" min="1" max="10" step="1" value="3" class="setting-input">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+        
+        <!-- gameInterface with overlaid panels -->
+		<div id="gameInterface" style="display: none; overflow:hidden;">
+			<!-- Game board canvas (takes full screen) -->
+			<div class="canvas-container">
+				<canvas id="mapCanvas"></canvas>
+				<div id="tooltip" class="tooltip"></div>
+			</div>
+			
+			<!-- Status bar at top center -->
+			<div class="game-status" id="gameStatus">Creator Phase: Player 1's Turn</div>
+			
+			<!-- Left floating panel - Controls and rules -->
+			<div class="floating-panel left-panel">
+				<div class="controls">
+					<button id="endTurnBtn" disabled>End Turn</button>
+					<button id="endCreatorPhaseBtn">End Creator Phase</button>
+					<button id="simulateGameBtn">Simulate Placement</button>
+					<div class="simulation-speed">
+						<label for="simulationSpeed">Speed:</label>
+						<select id="simulationSpeed">
+							<option value="50">Fastest</option>
+							<option value="200">Fast</option>
+							<option value="500" selected>Normal</option>
+							<option value="1000">Slow</option>
+						</select>
+					</div>
+				</div>
+				
+				<div id="rulesPanel" class="info-panel">
+					<h3>Game Rules:</h3>
+					<ul>
+						<li>Each player receives territory cards plus special cards</li>
+						<li>Players take turns placing cards to build the map</li>
+						<li>Continent cards must be adjacent to same continent</li>
+						<li>Special cards create unique terrain:</li>
+						<ul>
+							<li><strong>Tsunami:</strong> Creates sea area</li>
+							<li><strong>Hurricane:</strong> Special water tile</li>
+							<li><strong>Volcano:</strong> Neutral mountain</li>
+							<li><strong>Bomb:</strong> Removes tiles</li>
+							<li><strong>Ship Route:</strong> Connects continents</li>
+						</ul>
+						<li><strong>Unit Placement:</strong></li>
+						<ul>
+							<li>Place units to claim territories</li>
+							<li>Reinforce your existing territories</li>
+							<li>Place all units to end the phase</li>
+						</ul>
+					</ul>
+				</div>
+			</div>
+			
+			<!-- Right floating panel - Game information -->
+			<div class="floating-panel right-panel">
+				<div class="panel-section">
+					<h3>Continents</h3>
+					<div class="continent-status" id="continentStatus">
+						<!-- Continent status badges will go here -->
+					</div>
+				</div>
+				
+				<div class="panel-section">
+					<h3>Players</h3>
+					<div class="player-info" id="playerInfo">
+					</div>
+				</div>
+			</div>
+			
+			<!-- Player hand at bottom -->
+			<div class="hand-container" id="playerHand">
+				<button class="hand-toggle" id="handToggle">Cards</button>
+				<div id="handCards">
+					<!-- Player tiles/cards will go here -->
+				</div>
+			</div>
+		</div>
+		
+		<!-- Game phase interface -->
+		<div id="attackDialog" class="game-dialog">
+			<div class="dialog-content">
+				<h3>Attack</h3>
+				<div id="defenderInfo"></div>
+				<div class="attack-options">
+					<label for="attackDice">Attack with:</label>
+					<select id="attackDice">
+						<option value="1">1 die</option>
+						<option value="2">2 dice</option>
+						<option value="3">3 dice</option>
+					</select>
+				</div>
+				<div id="defenseDiceCount"></div>
+				<div class="dialog-buttons">
+					<button id="cancelAttackBtn" onclick="document.getElementById('attackDialog').style.display='none'">Cancel</button>
+					<button id="executeAttackBtn" onclick="executeAttack()">Attack</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- Attack Result Dialog -->
+		<div id="attackResultDialog" class="game-dialog">
+			<div class="dialog-content">
+				<div id="attackResultContent"></div>
+				<div class="dialog-buttons">
+					<button onclick="closeAttackResult()">Continue</button>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Move After Capture Dialog -->
+		<div id="moveAfterCaptureDialog" class="game-dialog">
+			<div class="dialog-content">
+				<h3>Move Troops</h3>
+				<p>Your attack succeeded! How many troops do you want to move?</p>
+				<div id="captureSourceInfo"></div>
+				<div id="captureDestInfo"></div>
+				<div class="fortify-options">
+					<label for="troopsToMoveAfterCapture">Troops to move: <span id="troopMoveAfterCaptureCount">1</span></label>
+					<input type="range" id="troopsToMoveAfterCapture" min="1" max="3" value="1" oninput="updateTroopMoveAfterCaptureCount()">
+				</div>
+				<div class="dialog-buttons">
+					<button onclick="executeMoveAfterCapture()">Move Troops</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- Fortify Dialog -->
+		<div id="fortifyDialog" class="game-dialog">
+			<div class="dialog-content">
+				<h3>Move Troops</h3>
+				<div id="sourceInfo"></div>
+				<div id="destinationInfo"></div>
+				<div class="fortify-options">
+					<label for="troopsToMove">Troops to move: <span id="troopMoveCount">1</span></label>
+					<input type="range" id="troopsToMove" min="1" max="10" value="1" oninput="updateTroopMoveCount()">
+				</div>
+				<div class="dialog-buttons">
+					<button onclick="document.getElementById('fortifyDialog').style.display='none'">Cancel</button>
+					<button onclick="executeFortify()">Move Troops</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+    <!-- Load scripts in correct order -->
+    <script src="utils.js"></script>
+    <script src="constants.js"></script>
+	<script src="settings.js"></script>
+    <script src="hexgrid.js"></script>
+    <script src="cards.js"></script>
+    <script src="ui.js"></script>
+    <script src="phases.js"></script>
+    <script src="interaction.js"></script>
+    <script src="main.js"></script>
+	<script src="game.js"></script>
+	<script src="saveload.js"></script>
+
+</body>
+</html>
